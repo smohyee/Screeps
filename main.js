@@ -22,8 +22,9 @@ module.exports.loop = function (){
            var harvesters = [];
            var upgraders = [];
 
-           for(creepname in room.find(FIND_MY_CREEPS)){
-               creep = Game.creeps[creepname];
+           var myRoomCreeps = room.find(FIND_MY_CREEPS);
+           for(i in myRoomCreeps){
+               creep = myRoomCreeps[i];
                if(creep.memory.role == 'harvester') harvesters.push(creep);
                if(creep.memory.role == 'upgrader') upgraders.push(creep);
            }
