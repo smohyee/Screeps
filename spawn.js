@@ -9,7 +9,7 @@ var spawn = {
     //
     harvester: function(location){
         location.createCreep([WORK, CARRY, MOVE], null, {role: 'harvester'});
-    };
+    }
 
     /**
      * @param {StructureSpawn} location
@@ -17,7 +17,7 @@ var spawn = {
     //
     upgrader: function(location){
         location.createCreep([WORK, CARRY, MOVE], null, {role: 'upgrader'});
-    };
+    }
 
 };
 
