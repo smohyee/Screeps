@@ -19,6 +19,7 @@ module.exports.loop = function (){
         if(!Game.creeps[i]) {
             delete Memory.creeps[i];
         }
+        else if(Game.creeps[i].memory.status == null) Game.creeps[i].memory.status = 'idle';
     }
 
     //check creep count in room and create as needed
