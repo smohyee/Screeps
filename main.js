@@ -19,8 +19,8 @@ module.exports.loop = function () {
                if(Game.creeps[creepName].memory.role == 'upgrader') upgraders.push(Game.creeps[creepName]);
            }
 
-           if(harvesters.size < 2) spawn.harvester(spawns[0]);
-           if(upgraders.size < 5) spawn.upgrader(spawns[0]);
+           if(harvesters.length < 2) spawn.harvester(spawns[0]);
+           if(upgraders.length < 5) spawn.upgrader(spawns[0]);
         }
     }
 
