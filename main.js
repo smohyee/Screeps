@@ -2,6 +2,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var spawn = require('spawn');
 var creep;
+var creepname;
 
 module.exports.loop = function (){
 
@@ -21,8 +22,8 @@ module.exports.loop = function (){
            var harvesters = [];
            var upgraders = [];
 
-           for(creep in room.find(FIND_MY_CREEPS)){
-               if(creep.spawning) continue;
+           for(creepname in room.find(FIND_MY_CREEPS)){
+               creep = Game.creeps[creepname];
                if(creep.memory.role == 'harvester') harvesters.push(creep);
                if(creep.memory.role == 'upgrader') upgraders.push(creep);
            }
@@ -32,7 +33,7 @@ module.exports.loop = function (){
         }
     }
 
-    for(var creepname in Game.creeps){
+    for(creepname in Game.creeps){
         //noinspection JSUnfilteredForInLoop
         creep = Game.creeps[creepname];
         if(creep.memory.role == 'harvester'){
