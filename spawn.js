@@ -3,12 +3,15 @@
  */
 var spawn = {
 
+    var result;
+
     /**
      * @param {StructureSpawn} location
      **/
     //
     harvester: function(location){
-        location.createCreep([WORK, CARRY, MOVE], null, {role: 'harvester'});
+        result = location.createCreep([WORK, CARRY, MOVE], null, {role: 'harvester'});
+        if(result > 0) console.log('Created creep. Name: ' + result + '; Role: harvester' );
     },
 
     /**
@@ -17,6 +20,7 @@ var spawn = {
     //
     upgrader: function(location){
         location.createCreep([WORK, CARRY, MOVE], null, {role: 'upgrader'});
+        if(result > 0) console.log('Created creep. Name: ' + result + '; Role: upgrader' );
     }
 
 };

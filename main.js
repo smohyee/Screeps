@@ -1,6 +1,16 @@
+//MODULE DECLARATIONS
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var spawn = require('spawn');
+
+//PARAMETER VARIABLES
+var HARVESTER_COUNT = 2;
+var UPGRADER_COUNT = 20;
+
+
+
+
+
 var creep;
 var creepname;
 
@@ -29,8 +39,8 @@ module.exports.loop = function (){
                if(creep.memory.role == 'upgrader') upgraders.push(creep);
            }
 
-           if(harvesters.length < 2) spawn.harvester(spawns[0]);
-           if(upgraders.length < 5) spawn.upgrader(spawns[0]);
+           if(harvesters.length < HARVESTER_COUNT) spawn.harvester(spawns[0]);
+           if(upgraders.length < UPGRADER_COUNT) spawn.upgrader(spawns[0]);
         }
     }
 
