@@ -14,9 +14,9 @@ module.exports.loop = function () {
            var harvesters = [];
            var upgraders = [];
 
-           for(var creepName in myCreeps){
-               if(Game.creeps[creepName].memory.role == 'harvester') harvesters.push(Game.creeps[creepName]);
-               if(Game.creeps[creepName].memory.role == 'upgrader') upgraders.push(Game.creeps[creepName]);
+           for(var creep in myCreeps){
+               if(creep.memory.role == 'harvester') harvesters.push(creep);
+               if(creep.memory.role == 'upgrader') upgraders.push(creep);
            }
 
            if(harvesters.length < 2) spawn.harvester(spawns[0]);
