@@ -10,11 +10,17 @@ module.exports.loop = function () {
         if(room.controller.my){
            var spawns = room.find(FIND_MY_SPAWNS);
 
-           var harvesters =  room.find(FIND_MY_CREEPS, {filter: function(object){return object.memory.role == 'harvester'}});
-           if(harvesters.size < 2) spawn.harvester(spawns[0])
+           var myCreeps = room.find(FIND_MY_CREEPS);
+           var harvesters = [];
+           var upgraders = [];
 
-            var upgraders =  room.find(FIND_MY_CREEPS, {filter: function(object){return object.memory.role == 'upgrader'}});
-            if(upgraders.size < 5) spawn.harvester(spawns[0])
+           for(var name in myCreeps){
+               if(Game.creeps[name].memory.role == 'harvester') harvesters.push(Game.creeps[name]);
+               if(Game.creeps[name].memory.role == 'upgrader') upgraders.push(Game.creeps[name]);
+           }
+
+           if(harvesters.size < 2) spawn.harvester(spawns[0]);
+           if(upgraders.size < 5) spawn.upgrader(spawns[0]);
         }
     }
 
