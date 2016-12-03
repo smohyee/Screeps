@@ -1,5 +1,6 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
+var _ = require('lodash');
 
 module.exports.loop = function () {
 
