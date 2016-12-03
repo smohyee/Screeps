@@ -7,7 +7,7 @@ A single unit that harvests, builds, and upgrades the controller.
  */
 var roleEngineer = {};
 
-roleEngineer.spawns = creep.room.find(FIND_MY_SPAWNS);
+roleEngineer.spawns = roleEngineer.getSpawns(creep);
 
 roleEngineer.run = function(creep){
 
@@ -18,6 +18,10 @@ roleEngineer.run = function(creep){
 
 
 };
+
+roleEngineer.getSpawns = function(creep){
+    return creep.room.find(FIND_MY_SPAWNS);
+}
 
 roleEngineer.determineStatus = function(creep){
     //if out of energy, go harvest
