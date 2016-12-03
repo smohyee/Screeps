@@ -16,10 +16,13 @@ module.exports.loop = function (){
 
     //clear memory storage for dead creeps
     for(var i in Memory.creeps) {
-        if(!Game.creeps[i]) {
+        creep = Game.creeps[i];
+
+        if(!creep) {
             delete Memory.creeps[i];
         }
-        else if(Game.creeps[i].memory.status == null) Game.creeps[i].memory.status = 'idle';
+        else if(creep.memory.role == 'harvester' || creep.memory.role == 'upgrader') creep.memory.role = 'engineer';
+        else if(creep.memory.status == null) creep.memory.status = 'idle';
     }
 
     //check creep count in room and create as needed
