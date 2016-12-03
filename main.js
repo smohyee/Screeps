@@ -9,12 +9,11 @@ module.exports.loop = function () {
 
         if(room.controller.my){
            var spawns = room.find(FIND_MY_SPAWNS);
-
-           var myCreeps = room.find(FIND_MY_CREEPS);
            var harvesters = [];
            var upgraders = [];
 
-           for(var creep in myCreeps){
+           for(var creep in room.find(FIND_MY_CREEPS)){
+               if(creep.spawning) continue;
                if(creep.memory.role == 'harvester') harvesters.push(creep);
                if(creep.memory.role == 'upgrader') upgraders.push(creep);
            }
