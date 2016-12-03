@@ -2,8 +2,16 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var spawn = require('spawn');
 
-module.exports.loop = function () {
+module.exports.loop = function (){
 
+    //clear memory storage for dead creeps
+    for(var i in Memory.creeps) {
+        if(!Game.creeps[i]) {
+            delete Memory.creeps[i];
+        }
+    }
+
+    //check creep count in room and create as needed
     for(var name in Game.rooms){
         var room = Game.rooms[name];
 
