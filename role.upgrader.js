@@ -18,7 +18,7 @@ var roleUpgrader = {
         }
         //If away from controller without full capacity, fill up
         else if(creep.carry.energy < creep.carryCapacity){
-            if(creep.pos.inRangeTo(sources[0], 2)) creep.harvest(sources[0]);
+            if(creep.pos.inRangeTo(sources[0], 1)) creep.harvest(sources[0]);
             else creep.moveTo(sources[0]);
         }
         //If away from controller with full capacity, move back to controller
