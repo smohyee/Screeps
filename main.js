@@ -1,11 +1,9 @@
 //MODULE DECLARATIONS
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
+var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
 
 //PARAMETER VARIABLES
-var HARVESTER_COUNT = 2;
-var UPGRADER_COUNT = 20;
+var ENGINEER_COUNT = 20;
 
 
 
@@ -29,29 +27,24 @@ module.exports.loop = function (){
 
         if(room.controller.my){
            var spawns = room.find(FIND_MY_SPAWNS);
-           var harvesters = [];
-           var upgraders = [];
+           var engineers = [];
 
            var myRoomCreeps = room.find(FIND_MY_CREEPS);
            for(i in myRoomCreeps){
                creep = myRoomCreeps[i];
-               if(creep.memory.role == 'harvester') harvesters.push(creep);
-               if(creep.memory.role == 'upgrader') upgraders.push(creep);
+               if(creep.memory.role == 'engineer') engineers.push(creep);
            }
 
-           if(harvesters.length < HARVESTER_COUNT) spawn.harvester(spawns[0]);
-           if(upgraders.length < UPGRADER_COUNT) spawn.upgrader(spawns[0]);
+           if(engineers.length < ENGINEER_COUNT) spawn.engineer(spawns[0]);
         }
     }
 
     for(creepname in Game.creeps){
         //noinspection JSUnfilteredForInLoop
         creep = Game.creeps[creepname];
-        if(creep.memory.role == 'harvester'){
-            roleHarvester.run(creep);
+        if(creep.memory.role == 'engineer'){
+            roleEngineer.run(creep);
         }
-        if(creep.memory.role == 'upgrader'){
-            roleUpgrader.run(creep);
-        }
+
     }
 }
