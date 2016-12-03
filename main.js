@@ -1,6 +1,6 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
-var spawn = require('');
+var spawn = require('spawn');
 
 module.exports.loop = function () {
 
