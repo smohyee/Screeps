@@ -5,22 +5,25 @@ var roleUpgrader = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        //If by the controller, upgrade till out of resources, then move toward source
 
-        if(creep.upgradeController(creep.room.controller) == ERR_NOT_ENOUGH_RESOURCES){
-            var sources = creep.room.find(FIND_SOURCES);
-            creep.moveTo(sources[0]);
-        }
-        //When no longer in range of controller, harvest source till at capacity
-        else if(creep.carry.energy < creep.carryCapacity) {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+        var sources = creep.room.find(FIND_SOURCES);
+        var controller = creep.room.controller;
+
+        //If next to controller, attempt to upgrade
+        if(creep.pos.isNearTo(controller)){
+            //If out of resources, move away from controller
+            if(creep.upgradeController(controller) == ERR_NOT_ENOUGH_RESOURCES){
                 creep.moveTo(sources[0]);
             }
         }
-        //When carry capacity maxed, moved back to controller
-        else if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller);
+        //If away from controller without full capacity, fill up
+        else if(creep.carry.energy < creep.carryCapacity){
+            if(creep.pos.isNearTo(sources[0])) creep.harvest(sources[]);
+            else creep.moveTo(sources[0]);
+        }
+        //If away from controller with full capacity, move back to capacity
+        else if(creep.carry.energy == creep.carryCapacity){
+            creep.moveTo(controller);
         }
 
     }
