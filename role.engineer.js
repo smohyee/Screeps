@@ -47,12 +47,26 @@ var roleEngineer = {
 
     harvest: function(creep){
         if(creep.carry.energy < creep.carryCapacity) {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+            var source = this.determineSource(creep);
+            if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(source);
             }
         }
         else creep.memory.status = 'idle';
+    },
+
+    determineSource: function(creep){
+      var sources = creep.room.find(FIND_SOURCES);
+      var i;
+
+      if(room.memory.targetSourceNumber == null) i = 0;
+      if(room.memory.targetSourceNumber >= sources.length) i = 0;
+      else{
+          i = room.memory.targetSourceNumber;
+          room.memory.targetSourceNumber = i + 1;
+      }
+
+      return sources[i];
     },
 
      feedSpawn: function(creep){
