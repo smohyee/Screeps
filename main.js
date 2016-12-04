@@ -6,9 +6,6 @@ var spawn = require('spawn');
 var ENGINEER_COUNT = 20;
 
 
-
-
-
 var creep;
 var creepname;
 

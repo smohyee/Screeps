@@ -7,23 +7,24 @@ A single unit that harvests, builds, and upgrades the controller.
  */
 var roleEngineer = {
 
-    spawns: null,
+    spawns: [],
+    buildsites: [],
 
     run: function(creep){
 
-        this.spawns = this.getSpawns(creep);
+        this.spawns = creep.room.find(FIND_MY_SPAWNS);
+        this.buildsites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
-        if(creep.memory.status == 'idle') creep.memory.status = this.determineStatus(creep);
+        if(creep.memory.status == 'idle'){
+            creep.memory.destinationID = null;
+            creep.memory.status = this.determineStatus(creep);
+        }
         if(creep.memory.status == 'harvesting') this.harvest(creep);
         if(creep.memory.status == 'feeding spawn') this.feedSpawn(creep);
+        if(creep.memory.status == 'building') this.construct(creep);
         if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
 
     },
-
-    getSpawns : function(creep){
-        return creep.room.find(FIND_MY_SPAWNS);
-    },
-
 
     determineStatus: function(creep){
         //if out of energy, go harvest
@@ -36,6 +37,9 @@ var roleEngineer = {
                 return 'feeding spawn';
             }
         }
+
+        //if there are construction sites, go build
+        if(this.buildsites.length > 0) return 'building';
 
         //otherwise, upgrade the controller
         if(creep.room.controller.my) return 'upgrading controller';
@@ -62,6 +66,22 @@ var roleEngineer = {
         }
         else creep.moveTo(spawn);
      },
+
+    construct: function(creep){
+        var targetSite;
+
+        if(creep.memory.destinationID == null){
+            targetSite = creep.pos.findClosestByPath(this.buildsites);
+            creep.memory.destinationID = targetSite.id;
+        }
+        else targetSite = Game.getObjectById(creep.memory.destinationID);
+
+        if(creep.pos.inRangeTo(targetSite, 3)){
+            if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
+        }
+        else creep.moveTo(targetSite);
+
+    },
 
     upgradeCtrl: function(creep){
         var controller = creep.room.controller;
