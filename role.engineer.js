@@ -48,8 +48,8 @@ var roleEngineer = {
 
     getDepositSites: function(creep){
         var sites = [];
-        sites.concat(creep.room.find(FIND_MY_SPAWNS));
-        sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
+        sites = sites.concat(creep.room.find(FIND_MY_SPAWNS));
+        sites = sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
 
         for(var i=0; i<sites.length; i++){
             if(sites[i].energy == sites[i].energyCapacity){
