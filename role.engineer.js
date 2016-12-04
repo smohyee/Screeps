@@ -42,10 +42,10 @@ var roleEngineer = {
         }
 
         //if there are construction sites, go build
-        if(this.buildsites.length > 0) return 'building';
+        if(this.buildSites.length > 0) return 'building';
 
         //if there are structures needing repair, go repair
-        if(this.repairsites.length > 0) return 'repairing';
+        if(this.repairSites.length > 0) return 'repairing';
 
         //otherwise, upgrade the controller
         if(creep.room.controller.my) return 'upgrading controller';
@@ -60,13 +60,13 @@ var roleEngineer = {
 
     getRepairSites: function(creep){
         var structures = creep.room.find(FIND_MY_STRUCTURES);
-        var repairsites = [];
+        var repairSites = [];
 
         for(var i=0; i<structures.length; i++){
-          if(structures[i].hits < structures[i].hitsMax) repairsites.push(structures[i]);
+          if(structures[i].hits < structures[i].hitsMax) repairSites.push(structures[i]);
         }
 
-        return repairsites;
+        return repairSites;
         },
 
     harvest: function(creep){
@@ -133,7 +133,7 @@ var roleEngineer = {
         var targetSite;
 
         if(creep.memory.destinationID == null) {
-            targetSite = creep.pos.findClosestByRange(this.repairsites);
+            targetSite = creep.pos.findClosestByRange(this.repairSites);
             creep.memory.destinationID = targetSite.id;
         }
         else{
