@@ -7,22 +7,22 @@ A single unit that harvests, builds, and upgrades the controller.
  */
 var roleEngineer = {
 
-    spawns: [],
-    buildsites: [],
-    repairsites: [],
+    depositSites: [],
+    buildSites: [],
+    repairSites: [],
 
     run: function(creep){
 
-        this.spawns = creep.room.find(FIND_MY_SPAWNS);
-        this.buildsites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-        this.repairsites = this.getRepairSites(creep);
+        this.depositSites = this.getDepositSites(creep);
+        this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+        this.repairSites = this.getRepairSites(creep);
 
         if(creep.memory.status == 'idle'){
             creep.memory.destinationID = null;
             creep.memory.status = this.determineStatus(creep);
         }
         if(creep.memory.status == 'harvesting') this.harvest(creep);
-        if(creep.memory.status == 'feeding spawn') this.feedSpawn(creep);
+        if(creep.memory.status == 'depositing') this.depositEnergy(creep);
         if(creep.memory.status == 'building') this.construct(creep);
         if(creep.memory.status == 'repairing') this.repair(creep);
         if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
@@ -34,10 +34,10 @@ var roleEngineer = {
         if(creep.carry.energy == 0) return 'harvesting';
 
         //if spawns need energy, go feed
-        for(var i=0; i<this.spawns.length; i++){
-            if(this.spawns[i].energy < this.spawns[i].energyCapacity){
-                creep.memory.destinationID = this.spawns[i].id;
-                return 'feeding spawn';
+        for(var i=0; i<this.depositSites.length; i++){
+            if(this.depositSites[i].energy < this.depositSites[i].energyCapacity){
+                creep.memory.destinationID = this.depositSites[i].id;
+                return 'depositing';
             }
         }
 
@@ -51,16 +51,23 @@ var roleEngineer = {
         if(creep.room.controller.my) return 'upgrading controller';
     },
 
-    getRepairSites: function(creep){
-          var structures = creep.room.find(FIND_MY_STRUCTURES);
-          var repairsites = [];
-
-          for(var i=0; i<structures.length; i++){
-              if(structures[i].hits < structures[i].hitsMax) repairsites.push(structures[i]);
-          }
-
-          return repairsites;
+    getDepositSites: function(creep){
+        var sites = [];
+        sites.concat(creep.room.find(FIND_MY_SPAWNS));
+        sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
+        return sites;
     },
+
+    getRepairSites: function(creep){
+        var structures = creep.room.find(FIND_MY_STRUCTURES);
+        var repairsites = [];
+
+        for(var i=0; i<structures.length; i++){
+          if(structures[i].hits < structures[i].hitsMax) repairsites.push(structures[i]);
+        }
+
+        return repairsites;
+        },
 
     harvest: function(creep){
         var source;
@@ -89,16 +96,16 @@ var roleEngineer = {
       return sources[i];
     },
 
-     feedSpawn: function(creep){
+     depositEnergy: function(creep){
 
-        var spawn = Game.getObjectById(creep.memory.destinationID);
+        var target = Game.getObjectById(creep.memory.destinationID);
 
         if(creep.carry.energy == 0) creep.memory.status = 'idle';
 
-        if(creep.pos.isNearTo(spawn)){
-            if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
+        if(creep.pos.isNearTo(target)){
+            if(creep.transfer(target, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
         }
-        else creep.moveTo(spawn);
+        else creep.moveTo(target);
      },
 
     construct: function(creep){
