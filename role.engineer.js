@@ -50,14 +50,14 @@ var roleEngineer = {
         var sites = [];
         sites = sites.concat(creep.room.find(FIND_MY_SPAWNS));
         sites = sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
-
+        var depSites = [];
         for(var i=0; i<sites.length; i++){
-            if(sites[i].energy == sites[i].energyCapacity){
-                sites.splice(i, 1);
+            if(sites[i].energy < sites[i].energyCapacity){
+                depSites.push(sites[i]);
             }
         }
 
-        return sites;
+        return depSites;
     },
 
 
