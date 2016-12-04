@@ -3,7 +3,7 @@ var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
 
 //PARAMETER VARIABLES
-var ENGINEER_COUNT = 20;
+var ENGINEER_COUNT = 10;
 
 
 var creep;

@@ -84,15 +84,22 @@ var roleEngineer = {
     construct: function(creep){
         var targetSite;
 
-        targetSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
-        creep.memory.destinationID = targetSite.id;
-
-        if(creep.pos.inRangeTo(targetSite.pos, 3)){
-            if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
-            if(creep.build(targetSite) < 0) creep.memory.destinationID = null;
+        //if no building site has been assigned yet
+        if(creep.memory.destinationID == null) {
+            targetSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
+            creep.memory.destinationID = targetSite.id;
         }
-        else creep.moveTo(targetSite);
-
+        //Once construction is complete, construction site ID will be removed from game
+        else if(Game.getObjectById(creep.memory.destinationID) == null){
+            creep.memory.status = 'idle';
+        }
+        else{
+            targetSite = Game.getObjectById(creep.memory.destinationID);
+            if(creep.pos.inRangeTo(targetSite.pos, 3)){
+                if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
+            }
+            else creep.moveTo(targetSite);
+        }
     },
 
     upgradeCtrl: function(creep){
