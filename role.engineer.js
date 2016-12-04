@@ -11,7 +11,7 @@ var roleEngineer = {
 
     run: function(creep){
 
-        roleEngineer.spawns = this.getSpawns(creep);
+        this.spawns = this.getSpawns(creep);
 
         if(creep.memory.status == 'idle') creep.memory.status = this.determineStatus(creep);
         if(creep.memory.status == 'harvesting') this.harvest(creep);
