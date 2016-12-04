@@ -9,11 +9,13 @@ var roleEngineer = {
 
     spawns: [],
     buildsites: [],
+    repairsites: [],
 
     run: function(creep){
 
         this.spawns = creep.room.find(FIND_MY_SPAWNS);
         this.buildsites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+        this.repairsites = this.getRepairSites(creep);
 
         if(creep.memory.status == 'idle'){
             creep.memory.destinationID = null;
@@ -22,6 +24,7 @@ var roleEngineer = {
         if(creep.memory.status == 'harvesting') this.harvest(creep);
         if(creep.memory.status == 'feeding spawn') this.feedSpawn(creep);
         if(creep.memory.status == 'building') this.construct(creep);
+        if(creep.memory.status == 'repairing') this.repair(creep);
         if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
 
     },
@@ -41,8 +44,22 @@ var roleEngineer = {
         //if there are construction sites, go build
         if(this.buildsites.length > 0) return 'building';
 
+        //if there are structures needing repair, go repair
+        if(this.repairsites.length > 0) return 'repairing';
+
         //otherwise, upgrade the controller
         if(creep.room.controller.my) return 'upgrading controller';
+    },
+
+    getRepairSites: function(creep){
+          var structures = creep.room.find(FIND_MY_STRUCTURES);
+          var repairsites = [];
+
+          for(var i=0; i<structures.length; i++){
+              if(structures[i].hits < structures[i].hitsMax) repairsites.push(structures[i]);
+          }
+
+          return repairsites;
     },
 
     harvest: function(creep){
@@ -100,6 +117,25 @@ var roleEngineer = {
             targetSite = Game.getObjectById(creep.memory.destinationID);
             if(creep.pos.inRangeTo(targetSite.pos, 3)){
                 if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
+            }
+            else creep.moveTo(targetSite);
+        }
+    },
+
+    repair: function(creep){
+        var targetSite;
+
+        if(creep.memory.destinationID == null) {
+            targetSite = creep.pos.findClosestByRange(this.repairsites);
+            creep.memory.destinationID = targetSite.id;
+        }
+        else{
+            targetSite = Game.getObjectById(creep.memory.destinationID);
+            if(targetSite.hits == targetSite.hitsMax){
+                creep.memory.status = 'idle';
+            }
+            else if(creep.pos.inRangeTo(targetSite.pos, 3)){
+                if(creep.repair(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
             else creep.moveTo(targetSite);
         }
