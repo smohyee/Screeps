@@ -60,7 +60,7 @@ var roleEngineer = {
       var i;
 
       if(creep.room.memory.targetSourceNumber == null) i = 0;
-      if(creep.room.memory.targetSourceNumber == sources.length) i = 0;
+      if(!creep.room.memory.targetSourceNumber < sources.length) i = 0;
       else{
           i = creep.room.memory.targetSourceNumber;
           creep.room.memory.targetSourceNumber = i + 1;
