@@ -64,7 +64,7 @@ var roleEngineer = {
     },
 
     getRepairSites: function(creep){
-        var structures = creep.room.find(FIND_STRUCTURES);
+        var structures = creep.room.find(FIND_STRUCTURES, {filter: {function(o){o.hits < o.hitsMax}}});
         var repairSites = [];
 
         for(var i=0; i<structures.length; i++){
