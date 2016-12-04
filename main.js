@@ -21,7 +21,6 @@ module.exports.loop = function (){
         if(!creep) {
             delete Memory.creeps[i];
         }
-        else if(creep.memory.role == 'harvester' || creep.memory.role == 'upgrader') creep.memory.role = 'engineer';
         else if(creep.memory.status == null) creep.memory.status = 'idle';
     }
 
@@ -44,7 +43,6 @@ module.exports.loop = function (){
     }
 
     for(creepname in Game.creeps){
-        //noinspection JSUnfilteredForInLoop
         creep = Game.creeps[creepname];
         if(creep.memory.role == 'engineer'){
             roleEngineer.run(creep);
