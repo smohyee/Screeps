@@ -15,7 +15,7 @@ var roleEngineer = {
 
         this.depositSites = this.getDepositSites(creep);
         this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-        this.repairSites = this.getRepairSites(creep);
+        this.repairSites = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.hits<o.hitsMax)});
 
         if(creep.memory.status == 'idle'){
             creep.memory.destinationID = null;
@@ -63,16 +63,6 @@ var roleEngineer = {
         return sites;
     },
 
-    getRepairSites: function(creep){
-        var structures = creep.room.find(FIND_STRUCTURES, {filter: {function(o){o.hits < o.hitsMax}}});
-        var repairSites = [];
-
-        for(var i=0; i<structures.length; i++){
-          if(structures[i].hits < structures[i].hitsMax) repairSites.push(structures[i]);
-        }
-
-        return repairSites;
-    },
 
     harvest: function(creep){
         var source;
