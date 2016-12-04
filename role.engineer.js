@@ -111,10 +111,10 @@ var roleEngineer = {
         else targetSite = Game.getObjectById(creep.memory.destinationID);
 
         if(creep.carry.energy == 0) creep.memory.status = 'idle';
-        else if(creep.pos.isNearTo(target)){
-            if(creep.transfer(target, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
+        else if(creep.pos.isNearTo(targetSite)){
+            if(creep.transfer(targetSite, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
         }
-        else creep.moveTo(target);
+        else creep.moveTo(targetSite);
      },
 
     construct: function(creep){
