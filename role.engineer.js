@@ -92,7 +92,7 @@ var roleEngineer = {
         var targetSite;
 
         if(creep.memory.destinationID == null){
-            targetSite = creep.pos.findClosestByRange(this.depositSites);
+            targetSite = creep.pos.findClosestByPath(this.depositSites);
             creep.memory.destinationID = targetSite.id;
         }
         else targetSite = Game.getObjectById(creep.memory.destinationID);
@@ -109,7 +109,7 @@ var roleEngineer = {
 
         //if no building site has been assigned yet
         if(creep.memory.destinationID == null) {
-            targetSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
+            targetSite = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
             creep.memory.destinationID = targetSite.id;
         }
         //Once construction is complete, construction site ID will be removed from game
@@ -129,7 +129,7 @@ var roleEngineer = {
         var targetSite;
 
         if(creep.memory.destinationID == null) {
-            targetSite = creep.pos.findClosestByRange(this.repairSites);
+            targetSite = creep.pos.findClosestByPath(this.repairSites);
             creep.memory.destinationID = targetSite.id;
         }
         else{
