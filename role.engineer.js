@@ -46,8 +46,14 @@ var roleEngineer = {
     },
 
     harvest: function(creep){
+        var source;
         if(creep.carry.energy < creep.carryCapacity) {
-            var source = this.determineSource(creep);
+            if(creep.memory.destinationID == null){
+                source = this.determineSource(creep);
+                creep.memory.destinationID = source.id;
+            }
+            else source = Game.getObjectById(creep.memory.destinationID);
+
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source);
             }
@@ -57,14 +63,11 @@ var roleEngineer = {
 
     determineSource: function(creep){
       var sources = creep.room.find(FIND_SOURCES);
-      var i;
+      var i = creep.room.memory.targetSourceNumber;
 
-      if(creep.room.memory.targetSourceNumber == null) i = 0;
-      if(!creep.room.memory.targetSourceNumber < sources.length) i = 0;
-      else{
-          i = creep.room.memory.targetSourceNumber;
-          creep.room.memory.targetSourceNumber = i + 1;
-      }
+      if(i == null || i >= sources.length) i = 0;
+
+      creep.room.memory.targetSourceNumber = i + 1;
 
       return sources[i];
     },
