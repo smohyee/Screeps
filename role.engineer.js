@@ -55,7 +55,7 @@ roleEngineer.feedSpawn = function(creep){
 
     var spawn = Game.getObjectById(creep.memory.destinationID);
 
-    if(creep.energy == 0) return 'idle';
+    if(creep.energy == 0) creep.memory.status = 'idle';
 
     if(creep.pos.isNearTo(spawn)){
         if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
