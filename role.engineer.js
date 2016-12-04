@@ -34,12 +34,7 @@ var roleEngineer = {
         if(creep.carry.energy == 0) return 'harvesting';
 
         //if spawns need energy, go feed
-        for(var i=0; i<this.depositSites.length; i++){
-            if(this.depositSites[i].energy < this.depositSites[i].energyCapacity){
-                creep.memory.destinationID = this.depositSites[i].id;
-                return 'depositing';
-            }
-        }
+        if(this.depositSites > 0) return 'depositing';
 
         //if there are construction sites, go build
         if(this.buildSites.length > 0) return 'building';
@@ -55,6 +50,13 @@ var roleEngineer = {
         var sites = [];
         sites.concat(creep.room.find(FIND_MY_SPAWNS));
         sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
+
+        for(var i=0; i<sites.length; i++){
+            if(sites[i].energy == sites[i].energyCapacity){
+                sites.splice(i, 1);
+            }
+        }
+
         return sites;
     },
 
@@ -97,12 +99,17 @@ var roleEngineer = {
     },
 
      depositEnergy: function(creep){
+        var targetSite;
 
-        var target = Game.getObjectById(creep.memory.destinationID);
+        if(creep.memory.destinationID == null){
+            targetSite = creep.pos.findClosestByRange(this.depositSites);
+            creep.memory.destinationID = targetSite.id;
+        }
+        else targetSite = Game.getObjectById(creep.memory.destinationID);
 
-        if(creep.carry.energy == 0) creep.memory.status = 'idle';
-
-        if(creep.pos.isNearTo(target)){
+        if(targetSite.hits == targetSite.hitsMax) creep.memory.status = 'idle';
+        else if(creep.carry.energy == 0) creep.memory.status = 'idle';
+        else if(creep.pos.isNearTo(target)){
             if(creep.transfer(target, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
         }
         else creep.moveTo(target);
