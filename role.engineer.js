@@ -118,7 +118,7 @@ var roleEngineer = {
         }
         else{
             targetSite = Game.getObjectById(creep.memory.destinationID);
-            if(creep.pos.inRangeTo(targetSite.pos, 3)){
+            if(creep.pos.getRangeTo(targetSite.pos <= 3)){
                 if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
             else creep.moveTo(targetSite);
@@ -137,7 +137,7 @@ var roleEngineer = {
             if(targetSite.hits == targetSite.hitsMax){
                 creep.memory.status = 'idle';
             }
-            else if(creep.pos.inRangeTo(targetSite.pos, 3)){
+            else if(creep.pos.getRangeTo(targetSite.pos) <= 3){
                 if(creep.repair(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
             else creep.moveTo(targetSite);
@@ -147,7 +147,7 @@ var roleEngineer = {
     upgradeCtrl: function(creep){
         var controller = creep.room.controller;
 
-        if(creep.pos.inRangeTo(controller.pos, 3)){
+        if(creep.pos.getRangeTo(controller.pos) <= 3){
             if(creep.upgradeController(controller) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
         }
         else creep.moveTo(controller);
