@@ -42,18 +42,20 @@ roleEngineer.determineStatus = function(creep){
 };
 
 roleEngineer.harvest = function(creep){
-        if(creep.carry.energy < creep.carryCapacity) {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
-            }
+    if(creep.carry.energy < creep.carryCapacity) {
+        var sources = creep.room.find(FIND_SOURCES);
+        if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(sources[0]);
         }
-        else creep.memory.status = 'idle';
-    };
+    }
+    else creep.memory.status = 'idle';
+};
 
 roleEngineer.feedSpawn = function(creep){
 
     var spawn = Game.getObjectById(creep.memory.destinationID);
+
+    if(creep.energy == 0) return 'idle';
 
     if(creep.pos.isNearTo(spawn)){
         if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
