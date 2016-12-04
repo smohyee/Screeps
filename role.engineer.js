@@ -64,7 +64,7 @@ var roleEngineer = {
     },
 
     getRepairSites: function(creep){
-        var structures = creep.room.find(FIND_MY_STRUCTURES);
+        var structures = creep.room.find(FIND_STRUCTURES);
         var repairSites = [];
 
         for(var i=0; i<structures.length; i++){
@@ -72,7 +72,7 @@ var roleEngineer = {
         }
 
         return repairSites;
-        },
+    },
 
     harvest: function(creep){
         var source;
@@ -110,8 +110,7 @@ var roleEngineer = {
         }
         else targetSite = Game.getObjectById(creep.memory.destinationID);
 
-        if(targetSite.hits == targetSite.hitsMax) creep.memory.status = 'idle';
-        else if(creep.carry.energy == 0) creep.memory.status = 'idle';
+        if(creep.carry.energy == 0) creep.memory.status = 'idle';
         else if(creep.pos.isNearTo(target)){
             if(creep.transfer(target, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
         }
