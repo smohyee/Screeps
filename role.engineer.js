@@ -153,6 +153,7 @@ var roleEngineer = {
 
         if(creep.pos.getRangeTo(controller.pos) <= 3){
             if(creep.upgradeController(controller) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
+            creep.moveTo(controller);
         }
         else creep.moveTo(controller);
 
