@@ -30,11 +30,14 @@ var roleEngineer = {
     },
 
     determineStatus: function(creep){
+
+        console.log(this.depositSites);
+
         //if out of energy, go harvest
         if(creep.carry.energy == 0) return 'harvesting';
 
         //if spawns need energy, go feed
-        if(this.depositSites > 0) return 'depositing';
+        if(this.depositSites.length > 0) return 'depositing';
 
         //if there are construction sites, go build
         if(this.buildSites.length > 0) return 'building';
