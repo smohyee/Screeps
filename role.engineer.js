@@ -34,7 +34,7 @@ var roleEngineer = {
         if(creep.carry.energy == 0) return 'harvesting';
 
         //if controller is going to downgrade soon
-        if(creep.room.controller.ticksToDowngrade < 3000) return 'upgrading controller';
+        if(creep.room.controller.ticksToDowngrade < 1000) return 'upgrading controller';
 
         //if spawns need energy, go feed
         if(this.depositSites.length > 0) return 'depositing';
