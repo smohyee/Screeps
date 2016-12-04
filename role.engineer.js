@@ -118,7 +118,7 @@ var roleEngineer = {
         }
         else{
             targetSite = Game.getObjectById(creep.memory.destinationID);
-            if(creep.pos.getRangeTo(targetSite.pos <= 3)){
+            if(creep.pos.getRangeTo(targetSite.pos) <= 3){
                 if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
             else creep.moveTo(targetSite);
