@@ -7,9 +7,11 @@ A single unit that harvests, builds, and upgrades the controller.
  */
 var roleEngineer = {};
 
-roleEngineer.spawns = roleEngineer.getSpawns(creep);
+roleEngineer.spawns = null;
 
 roleEngineer.run = function(creep){
+
+    roleEngineer.spawns = roleEngineer.getSpawns(creep);
 
     if(creep.memory.status == 'idle') creep.memory.status = this.determineStatus(creep);
     if(creep.memory.status == 'harvesting') this.harvest(creep);
