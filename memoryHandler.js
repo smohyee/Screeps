@@ -42,18 +42,7 @@ var memoryHandler = {
         this.setContainerMemory();
 
     },
-/*
-    updateContainerMemory: function(location){
-        var containers = location.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_CONTAINER}})
 
-        for(var i=0; i<containers.length; i++){
-
-        }
-    }
-*/
-    setContainerMemory: function(){
-
-    }
 };
 
 
