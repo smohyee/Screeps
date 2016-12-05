@@ -34,8 +34,8 @@ var repairHandler = {
 
     runRepairers: function(){
 
-        for(var i=0; i<this.reloaders.length; i++){
-            var reloader = this.reloaders[i]
+        for(var i=0; i<this.repairers.length; i++){
+            var reloader = this.repairers[i]
 
             if(reloader.memory.status == 'idle'){
                 reloader.memory.destinationID = null;
