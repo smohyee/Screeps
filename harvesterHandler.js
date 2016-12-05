@@ -55,15 +55,15 @@ var harvesterHandler = {
 
     //spawns idle harvesters as needed by containers
     spawnHarvester: function(location){
+        var spawns = location.find(FIND_MY_SPAWNS);
+
         if(location.memory.spawnHarvester == 1){
-            var spawns = location.find(FIND_MY_SPAWNS);
-            var result = 0;//spawns[0].createCreep([WORK, WORK, MOVE, WORK, MOVE], null, {role: 'harvester', status: 'idle'});
-            if(!(result<0)){
+            if(spawns[0].canCreateCreep([WORK, WORK, MOVE, WORK, MOVE])){
+                var result = spawns[0].createCreep([WORK, WORK, MOVE, WORK, MOVE], null, {role: 'harvester', status: 'idle'});
                 console.log('Created creep. Name: ' + result + '; Role: harvester');
                 location.memory.spawnHarvester = 0;
             }
         }
-
     },
 
     //assigns idle harvesters to containers that don't have one, via memory
