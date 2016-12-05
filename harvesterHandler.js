@@ -19,8 +19,6 @@ var harvesterHandler = {
 
         //check if containers have a matching harvester
         this.checkContainers();
-        //if room memory.spawnHarvester is set to 1, this method will spawn a single harvester and reset to 0
-        this.spawnHarvester(location);
 
         this.runHarvesters();
     },
