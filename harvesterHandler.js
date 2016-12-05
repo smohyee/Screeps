@@ -57,23 +57,18 @@ var harvesterHandler = {
     spawnHarvester: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(location.memory.spawnHarvester == 0){
-            if(spawns[0].canCreateCreep([WORK, WORK, MOVE, WORK, MOVE]) == OK){
-                var result = spawns[0].createCreep([WORK, WORK, MOVE, WORK, MOVE], null, {role: 'harvester', status: 'idle'});
-                console.log('Created creep. Name: ' + result + '; Role: harvester');
-                location.memory.spawnHarvester = 1;
-            }
+        if(spawns[0].canCreateCreep([WORK, WORK, MOVE, WORK, MOVE]) == OK){
+            var result = spawns[0].createCreep([WORK, WORK, MOVE, WORK, MOVE], null, {role: 'harvester', status: 'idle'});
+            console.log('Created creep. Name: ' + result + '; Role: harvester');
         }
+
     },
 
     //assigns idle harvesters to containers that don't have one, via memory
     assignIdleHarvester: function(container){
         var harvester = container.pos.findClosestByPath(FIND_MY_CREEPS, {filter: {memory: {role: 'harvester', status: 'idle'}}});
         //if no harvester is found, queue one up for spawn
-        if(harvester == null && container.room.memory.spawnHarvester == 0){
-            this.spawnHarvester(container.room);
-        }
-        else if(harvester == null) return;
+        if(harvester == null) this.spawnHarvester(container.room);
         else{
             container.memory.harvesterID = harvester.id;
             harvester.memory.destinationID = container.id;
