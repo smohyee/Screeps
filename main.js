@@ -3,7 +3,7 @@ var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
 var harvesterHandler = require('harvesterHandler');
 var reloaderHandler = require('reloaderHandler');
-var repairHandeler = require('repairHandler');
+var repairHandler = require('repairHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
