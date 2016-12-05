@@ -8,6 +8,7 @@ var reloaderHandler = {
 
     reloaders: [],
     depositSites: [],
+    RELOADER_COUNT: 1,
 
 
     run: function(location){
@@ -21,7 +22,7 @@ var reloaderHandler = {
             filter: {memory: {role: 'reloader'}}
         })
 
-        if(this.reloaders.length < RELOADER_COUNT) this.spawnReloader(location);
+        if(this.reloaders.length < this.RELOADER_COUNT) this.spawnReloader(location);
 
         this.runReloaders();
 

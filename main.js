@@ -7,7 +7,6 @@ var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
 var ENGINEER_COUNT = 10;
-var RELOADER_COUNT = 1;
 
 module.exports.loop = function (){
 
