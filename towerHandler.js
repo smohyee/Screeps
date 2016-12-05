@@ -15,6 +15,7 @@ var towerHandler = {
         for(var i=0; i<this.towers.length; i++){
             var tower = this.towers[i];
 
+            if(this.enemies.length > 0) this.attack(tower);
             if(this.repairSites.length > 0) this.repair(tower);
         }
     },
@@ -23,7 +24,12 @@ var towerHandler = {
         this.repairSites.sort(function(a,b){return a.hits - b.hits});
 
         tower.repair(this.repairSites[0]);
+    },
+
+    attack: function(tower){
+        tower.attack(this.enemies[0]);
     }
+
 }
 
 module.exports = towerHandler;
