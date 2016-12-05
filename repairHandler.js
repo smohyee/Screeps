@@ -7,7 +7,7 @@ var repairHandler = {
 
     repairers: [],
     repairSites: [],
-    REPAIRER_COUNT: 5,
+    REPAIRER_COUNT: 3,
 
 
     run: function(location){
