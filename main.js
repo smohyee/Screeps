@@ -5,7 +5,7 @@ var harvesterHandler = require('harvesterHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
-var ENGINEER_COUNT = 10;
+var ENGINEER_COUNT = 20;
 
 module.exports.loop = function (){
 
