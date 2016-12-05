@@ -60,9 +60,12 @@ var repairHandler = {
 
     repair: function(creep){
         var targetSite;
+        //sort repair sites in order of ascending hit points. repairSites[0] is the weakest building in the room.
+        this.repairSites.sort(function(a,b){return a.hits - b.hits});
+
 
         if(creep.memory.destinationID == null) {
-            targetSite = creep.pos.findClosestByPath(this.repairSites);
+            targetSite = this.repairSites[0];
             creep.memory.destinationID = targetSite.id;
         }
         else{

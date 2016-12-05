@@ -24,7 +24,7 @@ var reloaderHandler = {
 
         if(this.reloaders.length < this.RELOADER_COUNT) this.spawnReloader(location);
 
-        this.runReloaders();
+        if(this.reloaders.length > 0) this.runReloaders();
 
     },
 
