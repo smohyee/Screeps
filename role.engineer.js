@@ -120,6 +120,8 @@ var roleEngineer = {
 
         if(creep.memory.destinationID == null){
             targetSite = creep.pos.findClosestByPath(this.depositSites);
+            console.log(targetSite);
+            console.log(this.depositSites);
             creep.memory.destinationID = targetSite.id;
         }
         else targetSite = Game.getObjectById(creep.memory.destinationID);
