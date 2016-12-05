@@ -77,7 +77,7 @@ var reloaderHandler = {
         if(creep.memory.destinationID == null) {
             container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (o) => o.structureType == STRUCTURE_CONTAINER &&
-                o.store[RESOURCE_ENERGY] > 100
+                o.store[RESOURCE_ENERGY] > 0
         });
             //if no container with energy found, go harvest directly from source
             if(container == null) creep.memory.status = 'idle';
