@@ -42,7 +42,7 @@ var memoryHandler = {
         }
 
         for(var i in Memory.containers){
-            if(Game.getObjectById(i) = null) delete Memory.containers[i];
+            if(Game.getObjectById(i) == null) delete Memory.containers[i];
         }
 
     },
