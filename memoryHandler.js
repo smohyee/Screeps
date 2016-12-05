@@ -41,6 +41,10 @@ var memoryHandler = {
             else if(creep.memory.status == null) creep.memory.status = 'idle';
         }
 
+        for(var i in Memory.containers){
+            if(Game.getObjectById(i) = null) delete Memory.containers[i];
+        }
+
     },
 
 };
