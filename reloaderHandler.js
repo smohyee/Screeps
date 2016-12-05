@@ -8,7 +8,7 @@ var reloaderHandler = {
 
     reloaders: [],
     depositSites: [],
-    RELOADER_COUNT: 3,
+    RELOADER_COUNT: 2,
 
 
     run: function(location){
