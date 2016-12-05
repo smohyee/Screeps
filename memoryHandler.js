@@ -39,8 +39,6 @@ var memoryHandler = {
             else if(creep.memory.status == null) creep.memory.status = 'idle';
         }
 
-        this.setContainerMemory();
-
     },
 
 };
