@@ -30,7 +30,7 @@ var harvesterHandler = {
         var harvestContainers = [];
 
         for(var i=0; i<containers.length; i++){
-            if(containers[i].findInRange(FIND_SOURCES, 1).length > 0) harvestContainers.push(containers[i]);
+            if(containers[i].pos.findInRange(FIND_SOURCES, 1).length > 0) harvestContainers.push(containers[i]);
         }
 
         return harvestContainers;
