@@ -32,7 +32,7 @@ var harvesterHandler = {
         for(var i=0; i<containers.length; i++){
             if(containers[i].pos.findInRange(FIND_SOURCES, 1).length > 0) harvestContainers.push(containers[i]);
         }
-
+        console.log(harvestContainers);
         return harvestContainers;
     },
 
