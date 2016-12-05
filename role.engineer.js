@@ -36,9 +36,6 @@ var roleEngineer = {
         //if controller is going to downgrade soon
         if(creep.room.controller.ticksToDowngrade < 1000) return 'upgrading controller';
 
-        //if spawns need energy, go feed
-        if(this.depositSites.length > 0) return 'depositing';
-
         //if there are construction sites, go build
         if(this.buildSites.length > 0) return 'building';
 
