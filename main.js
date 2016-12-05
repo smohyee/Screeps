@@ -40,6 +40,9 @@ module.exports.loop = function (){
         if(creep.memory.role == 'engineer'){
             roleEngineer.run(creep);
         }
+        if(creep.memory.status == 'idle'){
+            creep.moveTo(Game.flags.IdleGather);
+        }
 
     }
 }
