@@ -7,7 +7,7 @@ Object.defineProperty(StructureContainer.prototype, 'memory', {
     enumerable: true,
     configurable: false,
     get: function() {
-        if(_.isUndefined(Memory.containers)) {
+        if(_.isUndefined(Memory.containers)||!_.isObject(Memory.containers)) {
             Memory.containers = {};
         }
         if(!_.isObject(Memory.containers)) {
