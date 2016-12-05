@@ -2,10 +2,12 @@
 var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
 var harvesterHandler = require('harvesterHandler');
+var reloaderHandler = require('reloaderHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
-var ENGINEER_COUNT = 20;
+var ENGINEER_COUNT = 10;
+var RELOADER_COUNT = 1;
 
 module.exports.loop = function (){
 
@@ -21,6 +23,7 @@ module.exports.loop = function (){
         if(room.controller.my){
             //run harvestHandler in each room to handle harvester behavior
             harvesterHandler.run(room);
+            reloaderHandler.run(room);
 
             var spawns = room.find(FIND_MY_SPAWNS);
             var engineers = [];

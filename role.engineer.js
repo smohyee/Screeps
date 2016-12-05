@@ -9,7 +9,6 @@ An Engineer is meant to serve as an all-purpose early game unit.
  */
 var roleEngineer = {
 
-    depositSites: [],
     buildSites: [],
     repairSites: [],
 
@@ -25,7 +24,6 @@ var roleEngineer = {
         }
         if(creep.memory.status == 'reloading') this.reload(creep);
         if(creep.memory.status == 'harvesting') this.harvest(creep);
-        if(creep.memory.status == 'depositing') this.depositEnergy(creep);
         if(creep.memory.status == 'building') this.construct(creep);
         if(creep.memory.status == 'repairing') this.repair(creep);
         if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
@@ -52,19 +50,6 @@ var roleEngineer = {
         if(creep.room.controller.my) return 'upgrading controller';
     },
 
-    getDepositSites: function(creep){
-        var sites = [];
-        sites = sites.concat(creep.room.find(FIND_MY_SPAWNS));
-        sites = sites.concat(creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}}));
-        var depSites = [];
-        for(var i=0; i<sites.length; i++){
-            if(sites[i].energy < sites[i].energyCapacity){
-                depSites.push(sites[i]);
-            }
-        }
-
-        return depSites;
-    },
 
     reload: function(creep){
         var container;
@@ -115,25 +100,6 @@ var roleEngineer = {
       return sources[i];
     },
 
-     depositEnergy: function(creep){
-        var targetSite;
-
-        if(creep.memory.destinationID == null){
-            targetSite = creep.pos.findClosestByPath(this.depositSites);
-            if(targetSite == null){//may be null if targetSite is inaccessible (eg blocked off)
-                creep.memory.status = 'idle';
-                return;
-            }
-            else creep.memory.destinationID = targetSite.id;
-        }
-        else targetSite = Game.getObjectById(creep.memory.destinationID);
-
-        if(targetSite.energy == targetSite.energyCapacity || creep.carry.energy == 0) creep.memory.status = 'idle';
-        else if(creep.pos.isNearTo(targetSite)){
-            if(creep.transfer(targetSite, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
-        }
-        else creep.moveTo(targetSite);
-     },
 
     construct: function(creep){
         var targetSite;
