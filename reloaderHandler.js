@@ -97,8 +97,8 @@ var reloaderHandler = {
     spawnReloader: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]) == OK){
-            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
+        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY]) == OK){
+            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
             console.log('Created creep. Name: ' + result + '; Role: reloader');
         }
     }
