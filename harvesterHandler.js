@@ -73,6 +73,7 @@ var harvesterHandler = {
         else{
             container.memory.harvesterID = harvester.id;
             harvester.memory.destinationID = container.id;
+            harvester.memory.status = 'harvesting';
         }
     },
 
