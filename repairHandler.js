@@ -77,7 +77,14 @@ var repairHandler = {
             else if(creep.pos.getRangeTo(targetSite.pos) <= 3){
                 if(creep.repair(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
-            else creep.moveTo(targetSite);
+            else{
+                creep.moveTo(targetSite);
+                //repair nearby buildings while moving towards target site.
+                var nearby = creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (o) => (o.hits < o.hitsMax)});
+                if(nearby.length > 0){
+                    if(creep.repair(nearby[0]) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
+                }
+            }
         }
     },
 
