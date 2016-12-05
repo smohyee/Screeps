@@ -30,9 +30,10 @@ var harvesterHandler = {
         var harvestContainers = [];
 
         for(var i=0; i<containers.length; i++){
-            if(containers[i].pos.findInRange(FIND_SOURCES, 1).length > 0) harvestContainers.push(containers[i]);
+            if(containers[i].pos.findInRange(FIND_SOURCES, 1).length > 0){
+                harvestContainers.push(containers[i]);
+            }
         }
-        console.log(harvestContainers);
         return harvestContainers;
     },
 
@@ -42,6 +43,7 @@ var harvesterHandler = {
     checkContainers: function() {
         for(var i=0; i<this.harvestContainers.length; i++) {
             var container = this.harvestContainers[i];
+            console.log(container);
             if(container.memory.harvesterID == null) this.assignIdleHarvester(container);
             else if(Game.getObjectById(container.memory.harvesterID) == null){
                 container.memory.harvesterID = null;
