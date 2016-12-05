@@ -1,15 +1,15 @@
 //MODULE DECLARATIONS
 var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
+var harvesterHandler = require('harvesterHandler');
 
-//PARAMETER VARIABLES
-var ENGINEER_COUNT = 15;
-
-
-var creep;
-var creepname;
+//ADJUSTABLE PARAMETERS
+var ENGINEER_COUNT = 10;
 
 module.exports.loop = function (){
+
+    var creep;
+    var creepname;
 
     //clear memory storage for dead creeps
     for(var i in Memory.creeps) {

@@ -2,8 +2,10 @@
  * Created by Sam on 12/3/2016.
  */
 /*
-Engineer role is meant to replace harvesters and upgraders.
-A single unit that harvests, builds, and upgrades the controller.
+An Engineer is meant to serve as an all-purpose early game unit.
+
+-Will harvest energy if no energy storage exists
+-Will deposit, build, repair, upgrade as needed in a fixed order.
  */
 var roleEngineer = {
 
@@ -21,6 +23,7 @@ var roleEngineer = {
             creep.memory.destinationID = null;
             creep.memory.status = this.determineStatus(creep);
         }
+        if(creep.memory.status == 'reloading') this.reload(creep);
         if(creep.memory.status == 'harvesting') this.harvest(creep);
         if(creep.memory.status == 'depositing') this.depositEnergy(creep);
         if(creep.memory.status == 'building') this.construct(creep);
@@ -31,7 +34,7 @@ var roleEngineer = {
 
     determineStatus: function(creep){
         //if out of energy, go harvest
-        if(creep.carry.energy == 0) return 'harvesting';
+        if(creep.carry.energy == 0) return 'reloading';
 
         //if controller is going to downgrade soon
         if(creep.room.controller.ticksToDowngrade < 1000) return 'upgrading controller';
@@ -63,6 +66,27 @@ var roleEngineer = {
         return depSites;
     },
 
+    reload: function(creep){
+        var container;
+        //assign creep a destination container if needed
+        if(creep.memory.destinationID == null) {
+            container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: (o) = > o.structureType == STRUCTURE_CONTAINER &&
+                o.store[RESOURCE_ENERGY] > 0
+            });
+            //if no container with energy found, go harvest directly from source
+            if(container == null) creep.memory.status = 'harvesting';
+            else creep.memory.destinationID = container.id;
+        }
+        else{
+            container = Game.getObjectById(creep.memory.destinationID);
+            //if creep is next to container, transfer till full, then go back to idle
+            if(creep.pos.isNearTo(container)){
+                if(creep.withdraw(container, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
+            }
+            else creep.moveTo(container);
+        }
+    },
 
     harvest: function(creep){
         var source;
