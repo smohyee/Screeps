@@ -19,8 +19,6 @@ module.exports.loop = function (){
         var room = Game.rooms[roomname];
 
         if(room.controller.my){
-            //creates memory alloc for new containers as necessary
-            memoryHandler.updateContainerMemory(room);
             //run harvestHandler in each room to handle harvester behavior
             harvesterHandler.run(room);
 
