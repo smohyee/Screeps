@@ -44,7 +44,7 @@ var harvesterHandler = {
         for(var i=0; i<this.harvestContainers.length; i++) {
             var container = this.harvestContainers[i];
             console.log(container);
-            console.log(container.memory.harvesterID);
+            console.log(container.memory.hasOwnProperty(harvesterID));
             if(container.memory.harvesterID == null) this.assignIdleHarvester(container);
             else if(Game.getObjectById(container.memory.harvesterID) == null){
                 container.memory.harvesterID = null;
