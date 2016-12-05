@@ -68,6 +68,7 @@ var repairHandler = {
             targetSite = this.repairSites[0];
             creep.memory.destinationID = targetSite.id;
         }
+        else if(Game.getObjectById(creep.memory.destinationID) == null) creep.memory.status = 'idle';
         else{
             targetSite = Game.getObjectById(creep.memory.destinationID);
             if(targetSite.hits == targetSite.hitsMax){
