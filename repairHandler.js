@@ -19,7 +19,7 @@ var repairHandler = {
 
         if(this.repairers.length < this.REPAIRER_COUNT) this.spawnRepairer(location);
 
-        if(repairers.length > 0) this.runRepairers();
+        if(this.repairers.length > 0) this.runRepairers();
 
     },
 
