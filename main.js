@@ -26,6 +26,10 @@ module.exports.loop = function (){
         var room = Game.rooms[roomname];
 
         if(room.controller.my){
+
+           //run harvestHandler in each room to handle harvester behavior
+            harvestHandler.run(room);
+
            var spawns = room.find(FIND_MY_SPAWNS);
            var engineers = [];
 
