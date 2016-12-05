@@ -61,7 +61,6 @@ var harvesterHandler = {
                 console.log('Created creep. Name: ' + result + '; Role: harvester');
                 location.memory.spawnHarvester = 0;
             }
-            else console.log('Error code spawning harvester: ' + result);
         }
 
     },

@@ -1,6 +1,8 @@
 /**
  * Created by Sam on 12/4/2016.
  */
+
+//Define memory property for container structures
 Object.defineProperty(StructureContainer.prototype, 'memory', {
     enumerable: true,
     configurable: false,

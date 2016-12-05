@@ -82,7 +82,7 @@ var roleEngineer = {
             container = Game.getObjectById(creep.memory.destinationID);
             //if creep is next to container, transfer till full, then go back to idle
             if(creep.pos.isNearTo(container)){
-                if(creep.withdraw(container, RESOURCE_ENERGY) == ERR_FULL) creep.memory.status = 'idle';
+                if(creep.withdraw(container, RESOURCE_ENERGY) < 0) creep.memory.status = 'idle';
             }
             else creep.moveTo(container);
         }
