@@ -14,7 +14,6 @@ var roleEngineer = {
 
     run: function(creep){
 
-        this.depositSites = this.getDepositSites(creep);
         this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
         this.repairSites = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.hits<o.hitsMax)});
 
