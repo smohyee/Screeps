@@ -6,7 +6,7 @@ var spawn = {
      * @param {StructureSpawn} location
      **/
     engineer: function(location){
-       var result = location.createCreep([WORK, CARRY, MOVE, WORK, CARRY, MOVE], null, {role: 'engineer', status: 'idle'});
+       var result = location.createCreep([WORK, WORK, MOVE, WORK, CARRY, MOVE, WORK, CARRY, MOVE], null, {role: 'engineer', status: 'idle'});
         if(result > 0) console.log('Created creep. Name: ' + result + '; Role: engineer' );
     }
 
