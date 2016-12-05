@@ -27,7 +27,11 @@ var memoryHandler = {
     }
 */
     setContainerMemory: function(){
+
+
         Object.defineProperty(StructureContainer.prototype, 'memory', {
+            enumerable: true,
+            configurable: false,
             get: function() {
                 if(_.isUndefined(Memory.containers)) {
                     Memory.containers = {};
