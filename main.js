@@ -4,6 +4,7 @@ var spawn = require('spawn');
 var harvesterHandler = require('harvesterHandler');
 var reloaderHandler = require('reloaderHandler');
 var repairHandler = require('repairHandler');
+var towerHandler = require('towerHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
@@ -25,6 +26,7 @@ module.exports.loop = function (){
             harvesterHandler.run(room);
             reloaderHandler.run(room);
             repairHandler.run(room);
+            towerHandler.run(room);
 
             var spawns = room.find(FIND_MY_SPAWNS);
             var engineers = [];
