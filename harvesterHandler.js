@@ -68,7 +68,7 @@ var harvesterHandler = {
 
     //assigns idle harvesters to containers that don't have one, via memory
     assignIdleHarvester: function(container){
-        var harvester = container.pos.findClosestByPath(FIND_MY_CREEPS, {filter: {memory: {role: 'harvester', status: 'idle'}}}).length;
+        var harvester = container.pos.findClosestByPath(FIND_MY_CREEPS, {filter: {memory: {role: 'harvester', status: 'idle'}}});
         //if no harvester is found, queue one up for spawn
         if(harvester == null) container.room.memory.spawnHarvester = 1;
         else{
