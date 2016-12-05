@@ -3,6 +3,7 @@ var roleEngineer = require('role.engineer');
 var spawn = require('spawn');
 var harvesterHandler = require('harvesterHandler');
 var reloaderHandler = require('reloaderHandler');
+var repairHandeler = require('repairHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
@@ -20,9 +21,10 @@ module.exports.loop = function (){
         var room = Game.rooms[roomname];
 
         if(room.controller.my){
-            //run harvestHandler in each room to handle harvester behavior
+            //run handlers in each room to handle behavior of different unit types
             harvesterHandler.run(room);
             reloaderHandler.run(room);
+            repairHandler.run(room);
 
             var spawns = room.find(FIND_MY_SPAWNS);
             var engineers = [];

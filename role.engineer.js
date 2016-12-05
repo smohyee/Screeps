@@ -10,12 +10,10 @@ An Engineer is meant to serve as an all-purpose early game unit.
 var roleEngineer = {
 
     buildSites: [],
-    repairSites: [],
 
     run: function(creep){
 
         this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-        this.repairSites = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.hits<o.hitsMax)});
 
         if(creep.memory.status == 'idle'){
             creep.memory.destinationID = null;
@@ -24,8 +22,8 @@ var roleEngineer = {
         if(creep.memory.status == 'reloading') this.reload(creep);
         if(creep.memory.status == 'harvesting') this.harvest(creep);
         if(creep.memory.status == 'building') this.construct(creep);
-        if(creep.memory.status == 'repairing') this.repair(creep);
         if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
+
 
     },
 
@@ -38,9 +36,6 @@ var roleEngineer = {
 
         //if there are construction sites, go build
         if(this.buildSites.length > 0) return 'building';
-
-        //if there are structures needing repair, go repair
-        if(this.repairSites.length > 0) return 'repairing';
 
         //otherwise, upgrade the controller
         if(creep.room.controller.my) return 'upgrading controller';
@@ -119,24 +114,6 @@ var roleEngineer = {
         }
     },
 
-    repair: function(creep){
-        var targetSite;
-
-        if(creep.memory.destinationID == null) {
-            targetSite = creep.pos.findClosestByPath(this.repairSites);
-            creep.memory.destinationID = targetSite.id;
-        }
-        else{
-            targetSite = Game.getObjectById(creep.memory.destinationID);
-            if(targetSite.hits == targetSite.hitsMax){
-                creep.memory.status = 'idle';
-            }
-            else if(creep.pos.getRangeTo(targetSite.pos) <= 3){
-                if(creep.repair(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
-            }
-            else creep.moveTo(targetSite);
-        }
-    },
 
     upgradeCtrl: function(creep){
         var controller = creep.room.controller;

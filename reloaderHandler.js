@@ -8,7 +8,7 @@ var reloaderHandler = {
 
     reloaders: [],
     depositSites: [],
-    RELOADER_COUNT: 1,
+    RELOADER_COUNT: 2,
 
 
     run: function(location){
@@ -79,7 +79,7 @@ var reloaderHandler = {
                 o.store[RESOURCE_ENERGY] > 100
         });
             //if no container with energy found, go harvest directly from source
-            if(container == null) creep.memory.status = 'harvesting';
+            if(container == null) creep.memory.status = 'idle';
             else creep.memory.destinationID = container.id;
         }
         else{
