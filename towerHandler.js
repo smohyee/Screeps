@@ -16,8 +16,9 @@ var towerHandler = {
             var tower = this.towers[i];
 
             if(this.enemies.length > 0) this.attack(tower);
-            if(this.repairSites.length > 0) this.repair(tower);
-        }
+            else if(this.repairSites.length > 0) this.repair(tower);
+            else{};
+
     },
 
     repair: function(tower){
