@@ -55,8 +55,8 @@ var harvesterHandler = {
     spawnHarvester: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(spawns[0].canCreateCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK]) == OK){
-            var result = spawns[0].createCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK], null, {role: 'harvester', status: 'idle'});
+        if(spawns[0].canCreateCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK]) == OK){
+            var result = spawns[0].createCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK], null, {role: 'harvester', status: 'idle'});
             console.log('Created creep. Name: ' + result + '; Role: harvester');
         }
 
