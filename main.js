@@ -8,7 +8,7 @@ var towerHandler = require('towerHandler');
 var memoryHandler = require('memoryHandler');
 
 //ADJUSTABLE PARAMETERS
-var ENGINEER_COUNT = 5;
+var ENGINEER_COUNT = 3;
 
 module.exports.loop = function (){
 
