@@ -8,6 +8,7 @@ var reloaderHandler = {
 
     reloaders: [],
     depositSites: [],
+    droppedResources: []
     RELOADER_COUNT: 2,
 
 
@@ -21,7 +22,10 @@ var reloaderHandler = {
 
         this.reloaders = location.find(FIND_MY_CREEPS, {
             filter: {memory: {role: 'reloader'}}
-        })
+        });
+
+        this.droppedResources = location.find(FIND_DROPPED_ENERGY);
+        this.droppedResources.concat(location.find(FIND_DROPPED_RESOURCES));
 
         if(this.reloaders.length < this.RELOADER_COUNT) this.spawnReloader(location);
 
@@ -40,12 +44,15 @@ var reloaderHandler = {
             }
             if(reloader.memory.status == 'reloading') this.reload(reloader);
             if(reloader.memory.status == 'depositing') this.deposit(reloader);
+            if(reloader.memory.status == 'pickup') this.pickup(reloader);
 
         }
 
     },
 
     determineStatus: function(creep){
+
+        if(this.droppedResources.length > 0) return 'pickup';
         //if out of energy, go reload
         if(creep.carry.energy == 0) return 'reloading';
 
@@ -91,6 +98,15 @@ var reloaderHandler = {
             }
             else creep.moveTo(container);
         }
+    },
+
+    pickup: function(creep){
+        if(creep.pos.isNearTo(this.droppedResources[0].pos){
+            if(creep.pickup(droppedResources[0]) == ERR_FULL){
+                creep.memory.status = 'dropoff';
+            }
+        }
+        else creep.moveTo(droppedResources[0]);
     },
 
     //spawns idle reloaders as needed
