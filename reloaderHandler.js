@@ -8,7 +8,7 @@ var reloaderHandler = {
 
     reloaders: [],
     depositSites: [],
-    droppedResources: []
+    droppedResources: [],
     RELOADER_COUNT: 2,
 
 
@@ -52,9 +52,12 @@ var reloaderHandler = {
 
     determineStatus: function(creep){
 
-        if(this.droppedResources.length > 0) return 'pickup';
+
         //if out of energy, go reload
-        if(creep.carry.energy == 0) return 'reloading';
+        if(creep.carry.energy == 0){
+            if(this.droppedResources.length > 0) return 'pickup';
+            else return 'reloading';
+        }
 
         //if spawns need energy, go feed
         if(this.depositSites.length > 0) return 'depositing';
