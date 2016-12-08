@@ -104,6 +104,7 @@ var reloaderHandler = {
     },
 
     pickup: function(creep){
+        if(this.droppedResources.length == 0) creep.memory.status = 'idle';
         if(creep.pos.isNearTo(this.droppedResources[0].pos)){
             if(creep.pickup(this.droppedResources[0]) < 0){
                 creep.memory.status = 'idle';
