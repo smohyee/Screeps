@@ -105,11 +105,11 @@ var reloaderHandler = {
 
     pickup: function(creep){
         if(creep.pos.isNearTo(this.droppedResources[0].pos)){
-            if(creep.pickup(droppedResources[0]) == ERR_FULL){
+            if(creep.pickup(this.droppedResources[0]) == ERR_FULL){
                 creep.memory.status = 'dropoff';
             }
         }
-        else creep.moveTo(droppedResources[0]);
+        else creep.moveTo(this.droppedResources[0]);
     },
 
     //spawns idle reloaders as needed
