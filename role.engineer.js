@@ -15,14 +15,19 @@ var roleEngineer = {
 
         this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
-        if(creep.memory.status == 'idle'){
+        //storing status in memory can only happen once per game tick - meaning it takes several ticks to go through the
+        // action - idle - new action cycle. tempStatus bypasses memory when checking determineStatus
+        var tempStatus = creep.memory.status;
+
+        if(tempStatus == 'idle'){
             creep.memory.destinationID = null;
-            creep.memory.status = this.determineStatus(creep);
+            tempStatus = this.determineStatus(creep);
+            creep.memory.status = tempStatus;
         }
-        if(creep.memory.status == 'reloading') this.reload(creep);
-        if(creep.memory.status == 'harvesting') this.harvest(creep);
-        if(creep.memory.status == 'building') this.construct(creep);
-        if(creep.memory.status == 'upgrading controller') this.upgradeCtrl(creep);
+        if(tempStatus == 'reloading') this.reload(creep);
+        if(tempStatus == 'harvesting') this.harvest(creep);
+        if(tempStatus == 'building') this.construct(creep);
+        if(tempStatus == 'upgrading controller') this.upgradeCtrl(creep);
 
 
     },
