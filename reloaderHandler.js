@@ -9,10 +9,13 @@ var reloaderHandler = {
     reloaders: [],
     depositSites: [],
     droppedResources: [],
+    enemies: [],
     RELOADER_COUNT: 2,
 
 
     run: function(location){
+        this.enemies = location.find(FIND_HOSTILE_CREEPS);
+
         this.depositSites = location.find(FIND_MY_STRUCTURES, {
                 filter: (o) => ((o.structureType == STRUCTURE_EXTENSION ||
                                 o.structureType == STRUCTURE_SPAWN) &&
@@ -59,7 +62,7 @@ var reloaderHandler = {
 
         //if out of energy, go reload
         if(creep.carry.energy == 0){
-            if(this.droppedResources.length > 0 && this.depositSites.length == 0) return 'pickup';
+            if(this.droppedResources.length > 0 && this.enemies.length == 0) return 'pickup';
             else return 'reloading';
         }
 
