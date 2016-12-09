@@ -52,7 +52,7 @@ var roleEngineer = {
         //assign creep a destination container if needed
         if(creep.memory.destinationID == null) {
             container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: (o) => o.structureType == STRUCTURE_CONTAINER &&
+                    filter: (o) => o.structureType == STRUCTURE_STORAGE &&
                                    o.store[RESOURCE_ENERGY] > 100
             });
             //if no container with energy found, go harvest directly from source
