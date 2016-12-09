@@ -18,7 +18,7 @@ var reloaderHandler = {
                                 o.structureType == STRUCTURE_SPAWN) &&
                                 o.energy < o.energyCapacity) ||
                                 (o.structureType == STRUCTURE_TOWER &&
-                                o.energy < o.energyCapacity - 100)
+                                o.energy < o.energyCapacity - 200)
         });
 
         if(this.depositSites.length == 0) {
