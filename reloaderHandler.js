@@ -10,7 +10,7 @@ var reloaderHandler = {
     depositSites: [],
     droppedResources: [],
     enemies: [],
-    RELOADER_COUNT: 2,
+    RELOADER_COUNT: 3,
 
 
     run: function(location){
