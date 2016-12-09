@@ -125,13 +125,13 @@ var reloaderHandler = {
         var containers = creep.pos.findInRange(FIND_STRUCTURES, 1, {filter: (o) => o.structureType == STRUCTURE_CONTAINER &&
                                                                                     o.store[RESOURCE_ENERGY] > 0});
 
-        if(creep.withdraw(containers[0], RESOURCE_ENERGY) < 0){}
-        if(this.droppedResources.length == 0) creep.memory.status = 'idle';
-        else if(creep.pos.isNearTo(this.droppedResources[0].pos)){
-            if(creep.pickup(this.droppedResources[0]) < 0){
 
-            if(creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) creep.memory.status = 'idle';
-            }
+        if(this.droppedResources.length == 0 && containers.length > 0){
+            if(creep.withdraw(containers[0], RESOURCE_ENERGY) < 0) creep.memory.status = 'idle';
+        }
+        else if(this.droppedResources.length == 0) creep.memory.status = 'idle';
+        else if(creep.pos.isNearTo(this.droppedResources[0].pos)){
+            if(creep.pickup(this.droppedResources[0]) == ERR_FULL) creep.memory.status = 'idle';
         }
         else creep.moveTo(this.droppedResources[0]);
     },
