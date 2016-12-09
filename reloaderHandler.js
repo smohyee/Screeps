@@ -132,7 +132,7 @@ var reloaderHandler = {
                         }
                     }
                 }
-            creep.memory.status = 'idle';
+            if(creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) creep.memory.status = 'idle';
             }
         }
         else creep.moveTo(this.droppedResources[0]);
