@@ -15,9 +15,10 @@ var reloaderHandler = {
     run: function(location){
         this.depositSites = location.find(FIND_MY_STRUCTURES, {
                 filter: (o) => ((o.structureType == STRUCTURE_EXTENSION ||
-                                    o.structureType == STRUCTURE_SPAWN ||
-                                    o.structureType == STRUCTURE_TOWER) &&
-                                    o.energy < o.energyCapacity)
+                                    o.structureType == STRUCTURE_SPAWN) &&
+                                    o.energy < o.energyCapacity) ||
+                                    (o.structureType == STRUCTURE_TOWER &&
+                                    o.energy < o.energyCapacity - 100))
         });
 
         if(this.depositSites.length == 0) {
