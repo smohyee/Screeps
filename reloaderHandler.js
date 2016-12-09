@@ -121,17 +121,15 @@ var reloaderHandler = {
     },
 
     pickup: function(creep){
+        //first withdraw from containers
+        var containers = creep.room.findInRange(STRUCTURE_CONTAINER, 1, {filter: {store[RESOURCE_ENERGY] > 0}});
+
+        if(creep.withdraw(containers[0], RESOURCE_ENERGY) < 0)
+
         if(this.droppedResources.length == 0) creep.memory.status = 'idle';
         else if(creep.pos.isNearTo(this.droppedResources[0].pos)){
             if(creep.pickup(this.droppedResources[0]) < 0){
-                var containers = creep.room.find(STRUCTURE_CONTAINER);
-                for(var i=0; i<containers.length; i++){
-                    if(creep.pos.isNearTo(containers[i])){
-                        if(creep.withdraw(containers[i], RESOURCE_ENERGY) < 0){
-                            creep.memory.status = 'idle';
-                        }
-                    }
-                }
+
             if(creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) creep.memory.status = 'idle';
             }
         }
