@@ -59,7 +59,7 @@ var reloaderHandler = {
 
         //if out of energy, go reload
         if(creep.carry.energy == 0){
-            if(this.droppedResources.length > 0) return 'pickup';
+            if(this.droppedResources.length > 0 && this.depositSites.length == 0) return 'pickup';
             else return 'reloading';
         }
 

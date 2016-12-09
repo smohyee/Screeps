@@ -48,6 +48,7 @@ module.exports.loop = function (){
     for(var roomname in Game.rooms){
         var room = Game.rooms[roomname];
 
+
         if(room.controller.my){
             //run handlers in each room to handle behavior of different unit types
             harvesterHandler.run(room);
