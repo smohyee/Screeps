@@ -22,8 +22,7 @@ var reloaderHandler = {
         });
 
         if(this.depositSites.length == 0) {
-            this.depositSites = location.find(FIND_MY_STRUCTURES,{
-                filter: (o) => o.structureType == STRUCTURE_STORAGE && _.sum(o.store) < o.storeCapcity});
+            this.depositSites = location.find(FIND_MY_STRUCTURES,{filter: {structureType: STRUCTURE_STORAGE}});
         }
         this.reloaders = location.find(FIND_MY_CREEPS, {
             filter: {memory: {role: 'reloader'}}
