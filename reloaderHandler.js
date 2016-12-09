@@ -9,7 +9,7 @@ var reloaderHandler = {
     reloaders: [],
     depositSites: [],
     droppedResources: [],
-    RELOADER_COUNT: 2,
+    RELOADER_COUNT: 3,
 
 
     run: function(location){
@@ -20,6 +20,10 @@ var reloaderHandler = {
                                     o.energy < o.energyCapacity)
         });
 
+        if(this.depositSites.length > 0) {
+            this.depositSites = location.find(FIND_MY_STRUCTURES,{
+                filter: (o) => o.structureType == STRUCTURE_STORAGE && o.energy < o.energyCapacity});
+        }
         this.reloaders = location.find(FIND_MY_CREEPS, {
             filter: {memory: {role: 'reloader'}}
         });
@@ -117,8 +121,8 @@ var reloaderHandler = {
     spawnReloader: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY]) == OK){
-            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
+        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]) == OK){
+            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
             console.log('Created creep. Name: ' + result + '; Role: reloader');
         }
     }
