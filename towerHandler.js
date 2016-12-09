@@ -10,7 +10,7 @@ var towerHandler = {
     run: function(location){
         this.towers = location.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
         this.enemies = location.find(FIND_HOSTILE_CREEPS);
-        this.repairSites = location.find(FIND_STRUCTURES, {filter: (o) => (o.hits < o.hitsMax && o.structureType != STRUCTURE_ROAD)});
+        this.repairSites = location.find(FIND_STRUCTURES, {filter: (o) => (o.hits < o.hitsMax)});
 
         for(var i=0; i<this.towers.length; i++) {
             var tower = this.towers[i];
