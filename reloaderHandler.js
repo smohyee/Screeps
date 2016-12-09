@@ -74,18 +74,22 @@ var reloaderHandler = {
     deposit: function(reloader){
         var targetSite = reloader.pos.findClosestByPath(this.depositSites);
 
-        if(targetSite != null){
-            if(reloader.memory.status=='idle') reloader.memory.status = 'reloading';
-
-            if(targetSite.energy == targetSite.energyCapacity || reloader.carry.energy == 0) reloader.memory.status = 'idle';
-            else if(reloader.pos.isNearTo(targetSite)){
-                if(reloader.transfer(targetSite, RESOURCE_ENERGY) < 0) reloader.memory.status = 'idle';
+        if(reloader.carry.energy == 0) reloader.memory.status = 'idle';
+        else if(targetSite != null) {
+            //storage structure has diff properties for storing than
+            if ((targetSite.structureType == STRUCTURE_STORAGE && _.sum(targetSite.store) < targetSite.storeCapcity) ||
+                (targetSite.energy < targetSite.energyCapacity)) {
+                if (reloader.pos.isNearTo(targetSite)) {
+                    if (reloader.transfer(targetSite, RESOURCE_ENERGY) < 0) reloader.memory.status = 'idle';
+                }
+                else reloader.moveTo(targetSite);
             }
-            else reloader.moveTo(targetSite);
+
         }
 
-    },
 
+    },
+    //pick up energy from harvesting containers
     reload: function(creep){
         var containers = [];
         var container;
