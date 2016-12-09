@@ -101,7 +101,7 @@ var reloaderHandler = {
             if(containers.length == 0) creep.memory.status = 'idle';
             else{
                 //find the container with the most energy (containers[0])
-                containers.sort(function(a,b){return b.energy - a.energy});
+                containers.sort(function(a,b){return b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]});
                 creep.memory.destinationID = containers[0].id;
             }
         }
