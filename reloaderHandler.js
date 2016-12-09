@@ -124,7 +124,15 @@ var reloaderHandler = {
         if(this.droppedResources.length == 0) creep.memory.status = 'idle';
         else if(creep.pos.isNearTo(this.droppedResources[0].pos)){
             if(creep.pickup(this.droppedResources[0]) < 0){
-                creep.memory.status = 'idle';
+                var containers = creep.room.find(STRUCTURE_CONTAINER);
+                for(var i=0; i<containers.length; i++){
+                    if(creep.pos.isNearTo(containers[i])){
+                        if(creep.withdraw(containers[i], RESOURCE_ENERGY) < 0){
+                            creep.memory.status = 'idle';
+                        }
+                    }
+                }
+            creep.memory.status = 'idle';
             }
         }
         else creep.moveTo(this.droppedResources[0]);
