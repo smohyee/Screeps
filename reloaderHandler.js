@@ -86,16 +86,20 @@ var reloaderHandler = {
     },
 
     reload: function(creep){
+        var containers = [];
         var container;
         //assign creep a destination container if needed
         if(creep.memory.destinationID == null) {
-            container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            containers = creep.room.find(FIND_STRUCTURES, {
                     filter: (o) => o.structureType == STRUCTURE_CONTAINER &&
-                o.store[RESOURCE_ENERGY] > 0
-        });
-            //if no container with energy found, go harvest directly from source
-            if(container == null) creep.memory.status = 'idle';
-            else creep.memory.destinationID = container.id;
+                    o.store[RESOURCE_ENERGY] > 0
+                    });
+            if(containers.length == 0) creep.memory.status = 'idle';
+            else{
+                //find the container with the most energy (containers[0])
+                containers.sort(function(a,b){return b.energy - a.energy});
+                creep.memory.destinationID = containers[0].id;
+            }
         }
         else{
             container = Game.getObjectById(creep.memory.destinationID);
