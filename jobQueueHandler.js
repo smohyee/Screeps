@@ -88,7 +88,7 @@ var jobQueueHandler = {
             }
         }
 
-    }
+    },
 
     prioritizeJobs: function(location){
         //Job priority is determined by position in Queue.
