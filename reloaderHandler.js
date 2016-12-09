@@ -20,7 +20,7 @@ var reloaderHandler = {
                                     o.energy < o.energyCapacity)
         });
 
-        if(this.depositSites.length > 0) {
+        if(this.depositSites.length == 0) {
             this.depositSites = location.find(FIND_MY_STRUCTURES,{
                 filter: (o) => o.structureType == STRUCTURE_STORAGE && o.energy < o.energyCapacity});
         }
