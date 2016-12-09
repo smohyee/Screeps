@@ -76,8 +76,7 @@ var reloaderHandler = {
         if(reloader.carry.energy == 0) reloader.memory.status = 'idle';
         else if(targetSite != null) {
             //storage structure has diff properties for storing than
-            console.log(_.sum(targetSite.store));
-            if ((targetSite.structureType == STRUCTURE_STORAGE && _.sum(targetSite.store) < targetSite.storeCapcity) ||
+            if ((targetSite.structureType == STRUCTURE_STORAGE && _.sum(targetSite.store) < targetSite.storeCapacity) ||
                 (targetSite.energy < targetSite.energyCapacity)) {
                 if (reloader.pos.isNearTo(targetSite)) {
                     if (reloader.transfer(targetSite, RESOURCE_ENERGY) < 0) reloader.memory.status = 'idle';
