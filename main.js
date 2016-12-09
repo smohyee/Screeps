@@ -6,7 +6,7 @@ var reloaderHandler = require('reloaderHandler');
 var repairHandler = require('repairHandler');
 var towerHandler = require('towerHandler');
 var memoryHandler = require('memoryHandler');
-var jobQueueHandler = require('JobQueueHandler');
+var jobQueueHandler = require('jobQueueHandler');
 
 //ADJUSTABLE PARAMETERS
 var ENGINEER_COUNT = 5;
