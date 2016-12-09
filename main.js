@@ -9,7 +9,7 @@ var memoryHandler = require('memoryHandler');
 var jobQueueHandler = require('jobQueueHandler');
 
 //ADJUSTABLE PARAMETERS
-var ENGINEER_COUNT = 5;
+var ENGINEER_COUNT = 3;
 
 //CUSTOM OBJECT PROPERTIES
 
