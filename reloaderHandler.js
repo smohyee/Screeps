@@ -122,10 +122,9 @@ var reloaderHandler = {
 
     pickup: function(creep){
         //first withdraw from containers
-        var containers = creep.room.findInRange(STRUCTURE_CONTAINER, 1, {filter: (o) => o.store[RESOURCE_ENERGY] > 0});
+        var containers = creep.pos.findInRange(STRUCTURE_CONTAINER, 1, {filter: (o) => o.store[RESOURCE_ENERGY] > 0});
 
-        if(creep.withdraw(containers[0], RESOURCE_ENERGY) < 0)
-
+        if(creep.withdraw(containers[0], RESOURCE_ENERGY) < 0){}
         if(this.droppedResources.length == 0) creep.memory.status = 'idle';
         else if(creep.pos.isNearTo(this.droppedResources[0].pos)){
             if(creep.pickup(this.droppedResources[0]) < 0){
