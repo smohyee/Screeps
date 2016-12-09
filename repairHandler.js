@@ -26,8 +26,8 @@ var repairHandler = {
     spawnRepairer: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(spawns[0].canCreateCreep([MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY,CARRY]) == OK){
-            var result = spawns[0].createCreep([MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY,CARRY], null, {role: 'repairer', status: 'idle'});
+        if(spawns[0].canCreateCreep([MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE]) == OK){
+            var result = spawns[0].createCreep([MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE], null, {role: 'repairer', status: 'idle'});
             console.log('Created creep. Name: ' + result + '; Role: repairer');
         }
     },
