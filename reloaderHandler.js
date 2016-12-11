@@ -10,7 +10,7 @@ var reloaderHandler = {
     depositSites: [],
     droppedResources: [],
     enemies: [],
-    RELOADER_COUNT: 3,
+    RELOADER_COUNT: 2,
 
 
     run: function(location){
@@ -21,7 +21,8 @@ var reloaderHandler = {
                                 o.structureType == STRUCTURE_SPAWN) &&
                                 o.energy < o.energyCapacity) ||
                                 (o.structureType == STRUCTURE_TOWER &&
-                                o.energy < o.energyCapacity - 200)
+                                o.energy < o.energyCapacity - 200 &&
+                                o.id == '5845ce94e65d538f75dc5328')
         });
 
         if(this.depositSites.length == 0) {
