@@ -21,8 +21,9 @@ var reloaderHandler = {
                                 o.structureType == STRUCTURE_SPAWN) &&
                                 o.energy < o.energyCapacity) ||
                                 (o.structureType == STRUCTURE_TOWER &&
-                                o.energy < o.energyCapacity - 200 &&
-                                o.id == '5845ce94e65d538f75dc5328')
+                                o.energy < o.energyCapacity - 200) ||
+                                (o.structureType == STRUCTURE_LINK && o.memory.linkType == 'input'
+                                && o.energy < o.energyCapacity - 200)
         });
 
         if(this.depositSites.length == 0) {
@@ -62,10 +63,11 @@ var reloaderHandler = {
 
 
         //if out of energy, go reload
-        if(creep.carry.energy == 0){
+        if(_.sum(creep.carry)== 0){
             if(this.droppedResources.length > 0 && this.enemies.length == 0) return 'pickup';
             else return 'reloading';
         }
+        else if(creep.carry.energy == 0) return 'depositing';
 
         //if spawns need energy, go feed
         if(this.depositSites.length > 0) return 'depositing';
@@ -75,19 +77,29 @@ var reloaderHandler = {
     },
 
     deposit: function(reloader){
-        var targetSite = reloader.pos.findClosestByPath(this.depositSites);
-
-        if(reloader.carry.energy == 0) reloader.memory.status = 'idle';
-        else if(targetSite != null) {
+        var targetSite; 
+        
+        if(_.sum(reloader.carry) == 0) reloader.memory.status = 'idle';
+        else if(reloader.carry.energy == 0) targetSite = reloader.room.find(FIND_MY_STRUCTURES,{filter: {structureType: STRUCTURE_STORAGE}})[0];
+        else targetSite = reloader.pos.findClosestByPath(this.depositSites);
+        
+        if(targetSite != null) {
             //storage structure has diff properties for storing than
-            if ((targetSite.structureType == STRUCTURE_STORAGE && _.sum(targetSite.store) < targetSite.storeCapacity) ||
-                (targetSite.energy < targetSite.energyCapacity)) {
+            if(targetSite.structureType == STRUCTURE_STORAGE && _.sum(targetSite.store) < targetSite.storeCapacity){
+                if (reloader.pos.isNearTo(targetSite)) {
+                    // transfer all resources
+                    for(var resourceType in reloader.carry) {
+                    	reloader.transfer(targetSite, resourceType);
+                    }
+                }
+                else reloader.moveTo(targetSite);               
+            }
+            else if(targetSite.energy < targetSite.energyCapacity){
                 if (reloader.pos.isNearTo(targetSite)) {
                     if (reloader.transfer(targetSite, RESOURCE_ENERGY) < 0) reloader.memory.status = 'idle';
                 }
                 else reloader.moveTo(targetSite);
             }
-
         }
 
 
@@ -96,28 +108,36 @@ var reloaderHandler = {
     reload: function(creep){
         var containers = [];
         var container;
+        var targetSite;
         //assign creep a destination container if needed
         if(creep.memory.destinationID == null) {
             containers = creep.room.find(FIND_STRUCTURES, {
-                    filter: (o) => o.structureType == STRUCTURE_CONTAINER &&
-                    o.store[RESOURCE_ENERGY] > 0
+                    filter: (o) => (o.structureType == STRUCTURE_CONTAINER && (o.store[RESOURCE_ENERGY] > 500 || o.store[RESOURCE_OXYGEN] > 500)) 
                     });
-            if(containers.length == 0) creep.memory.status = 'idle';
-            else{
-                //find the container with the most energy (containers[0])
-                containers.sort(function(a,b){return b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]});
-                creep.memory.destinationID = containers[0].id;
+            
+            if(containers.length > 0){
+                    containers.sort(function(a,b){return _.sum(b.store) - _.sum(a.store)});
+                    creep.memory.destinationID = containers[0].id;
+                
+            }
+            else{ 
+                targetSite = creep.room.find(FIND_MY_STRUCTURES,{filter: {structureType: STRUCTURE_STORAGE}})[0];
+                if(targetSite.store.energy > 500) creep.memory.destinationID = targetSite.id;
+                else creep.memory.status = 'idle';
             }
         }
         else{
-            container = Game.getObjectById(creep.memory.destinationID);
-            //if creep is next to container, transfer till full, then go back to idle
-            if(creep.pos.isNearTo(container)){
-                if(creep.withdraw(container, RESOURCE_ENERGY) < 0){
-                    creep.memory.status = 'idle';
+            targetSite = Game.getObjectById(creep.memory.destinationID);
+            //if creep is next to container or link, transfer till full, then go back to idle
+            if(creep.pos.isNearTo(targetSite)){
+                if(targetSite.store[RESOURCE_ENERGY] > 0){
+                    if(creep.withdraw(targetSite, RESOURCE_ENERGY) < 0) creep.memory.status = 'idle';
+                }
+                else if(targetSite.store[RESOURCE_OXYGEN] > 0){
+                    if(creep.withdraw(targetSite, RESOURCE_OXYGEN) < 0) creep.memory.status = 'idle';
                 }
             }
-            else creep.moveTo(container);
+            else creep.moveTo(targetSite);
         }
     },
 
@@ -141,8 +161,8 @@ var reloaderHandler = {
     spawnReloader: function(location){
         var spawns = location.find(FIND_MY_SPAWNS);
 
-        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]) == OK){
-            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
+        if(spawns[0].canCreateCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY]) == OK){
+            var result = spawns[0].createCreep([MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY, MOVE, CARRY, CARRY], null, {role: 'reloader', status: 'idle'});
             console.log('Created creep. Name: ' + result + '; Role: reloader');
         }
     }

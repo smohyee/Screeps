@@ -5,6 +5,7 @@ var towerHandler = {
     towers: [],
     enemies: [],
     repairSites: [],
+    mycreeps: [],
 
 
     run: function(location){
@@ -12,11 +13,12 @@ var towerHandler = {
         this.enemies = location.find(FIND_HOSTILE_CREEPS);
         this.repairSites = location.find(FIND_STRUCTURES, {filter: (o) => (o.hits < o.hitsMax)});
 
+
         for(var i=0; i<this.towers.length; i++) {
             var tower = this.towers[i];
 
             if (this.enemies.length > 0) this.attack(tower);
-            else if (this.repairSites.length > 0) this.repair(tower);
+            else if (this.repairSites.length > 0 && tower.id != '584cb6e014f0ffe6607ad59b') this.repair(tower);
         }
 
     },

@@ -31,6 +31,9 @@ var harvesterHandler = {
             if(containers[i].pos.findInRange(FIND_SOURCES, 1).length > 0){
                 harvestContainers.push(containers[i]);
             }
+            else if(containers[i].pos.findInRange(FIND_MINERALS, 1).length > 0){
+                harvestContainers.push(containers[i]);
+            }
         }
         return harvestContainers;
     },
@@ -82,7 +85,13 @@ var harvesterHandler = {
             //if harvester is on destination, harvest
             if(harvester.pos.isEqualTo(Game.getObjectById(harvester.memory.destinationID))){
                 var sources = harvester.pos.findInRange(FIND_SOURCES_ACTIVE, 1);
+                var minerals = harvester.pos.findInRange(FIND_MINERALS, 1);
+                var extractors = harvester.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: {structureType: STRUCTURE_EXTRACTOR}});
+  
                 if(sources.length > 0) harvester.harvest(sources[0]);
+                else if(minerals.length > 0 && extractors[0].cooldown == 0){
+                    harvester.harvest(minerals[0]);
+                }
             }
             //if harvester is not on destination container, move
             else harvester.moveTo(Game.getObjectById(harvester.memory.destinationID));

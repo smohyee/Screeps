@@ -12,7 +12,7 @@ var roleEngineer = {
     buildSites: [],
 
     run: function(creep){
-
+       
         this.buildSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
         //storing status in memory can only happen once per game tick - meaning it takes several ticks to go through the
@@ -28,7 +28,7 @@ var roleEngineer = {
         if(tempStatus == 'harvesting') this.harvest(creep);
         if(tempStatus == 'building') this.construct(creep);
         if(tempStatus == 'upgrading controller') this.upgradeCtrl(creep);
-
+        
 
     },
 
@@ -49,11 +49,12 @@ var roleEngineer = {
 
     reload: function(creep){
         var container;
+        
         //assign creep a destination container if needed
         if(creep.memory.destinationID == null) {
             container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: (o) => o.structureType == STRUCTURE_STORAGE &&
-                                   o.store[RESOURCE_ENERGY] > 100
+                    filter: (o) => (o.structureType == STRUCTURE_STORAGE && o.store[RESOURCE_ENERGY] > 100) ||
+                                   (o.structureType == STRUCTURE_LINK && o.memory.linkType == 'output' && o.energy > 0)
             });
             //if no container with energy found, go harvest directly from source
             if(container == null) creep.memory.status = 'harvesting';
@@ -67,6 +68,7 @@ var roleEngineer = {
             }
             else creep.moveTo(container);
         }
+        
     },
 
     harvest: function(creep){
@@ -99,6 +101,7 @@ var roleEngineer = {
 
     construct: function(creep){
         var targetSite;
+        var path;
 
         //if no building site has been assigned yet
         if(creep.memory.destinationID == null) {
@@ -114,7 +117,9 @@ var roleEngineer = {
             if(creep.pos.getRangeTo(targetSite.pos) <= 3){
                 if(creep.build(targetSite) == ERR_NOT_ENOUGH_RESOURCES) creep.memory.status = 'idle';
             }
-            else creep.moveTo(targetSite);
+            else{
+                creep.moveTo(targetSite);
+            }
         }
     },
 
